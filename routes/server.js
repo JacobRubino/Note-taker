@@ -1,14 +1,10 @@
-const express = require('express');
+require('express')
 
 const PORT = 3001;
-const notes = require('../db/db.json');
+// const notes = require('../db/db.json');
 
-const app = express();
-
-app.use('/notes', notes);
+const app = require('./routes');
 
 app.listen(PORT, () =>
   console.log(`Express server listening on port ${PORT}!`)
 );
-
-module.exports(app);
