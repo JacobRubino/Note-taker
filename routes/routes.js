@@ -1,9 +1,6 @@
-const router = require('express').router;
+const express = require('express');
+const router = express.Router();
 const fs = require('fs');
-
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-
 // app.get('/notes', (req, res) => {
 //   const noteData = fs.readFile('../db/db.json', (err, data) => {
 //     if (err) throw err;
@@ -12,14 +9,15 @@ const fs = require('fs');
 //   console.log(noteData);
 //   res.sendFile()
 // });
-router.get('/', (req, res) => {
+router.get('/notes', (req, res) => {
   fs.readFile('./db/db.json', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
       return;
     }
-    res.resnder(json(JSON.parse(data));
+    const allNotes = [...JSON.parse(data)];
+    res.json(allNotes);
   });
 });
 
