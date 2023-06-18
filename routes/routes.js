@@ -47,26 +47,30 @@ router.post("/notes", (req, res) => {
   });
 });
 
-router.delete("/notes:id", (req, res) => {
+router.delete("/notes/:id", (req, res) => {
   // take the id of the note that we are requesting to delete
   const deleteNote = req.params.id;
   // get the notes from the db
-  fs.readFile("../db/db.json", (err, data) => {
+  fs.readFile(filePath, (err, data) => {
     if (err) throw err;
-    console.log(data);
     //parse the info in the db
-    parseData = JSON.parse(data);
-    // map the notes, if any items in the note match the note id, set to null to delete
-    const postDeletedNotes = notes.map((note) => {
-      if (note.id === noteId) {
-        return null; // Mark the note for deletion by returning null
+    const parseData = JSON.parse(data);
+    // map the notes as parseData, if any items in the note match the note id, set to null to delete
+    const postDeletedNotes = parseData.map((note) => {
+      if (note.id === deleteNote) {
+        //return null to delete the entry
+        return null; 
       }
       return note;
-    })
+      })
     // remove the null entries
     .filter((note) => note !== null); 
     //rewrite the db
-    fs.writeFile("../db/db.json", JSON.stringify(postDeletedNotes));
+    fs.writeFile(filePath, JSON.stringify(postDeletedNotes), (err) => {
+      if (err) throw err;
+      
+      res.status(200).send("Note deleted"); // Send a success response
+    });
   });
 });
 
