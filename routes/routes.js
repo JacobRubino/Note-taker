@@ -11,31 +11,40 @@ const fs = require('fs');
 //   res.sendFile()
 // });
 
-router.get('/notes', (req, res) => {
-  fs.readFile('./db/db.json', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    const allNotes = [...JSON.parse(data)];
-    res.json(allNotes);
-  });
-});
-
-// router.post('/notes', (req, res) => {
-//   const noteData = fs.readFile('../db/db.json', (err, data) => {
-//     if (err) throw err;
-//     console.log(data);
-//     if (req.body) {
-//       const newNote = {
-//           title,
-//           text,
-//           id: uuidv4(),
-//       };
-//     };
+// router.get('/notes', (req, res) => {
+  
+//   fs.readFile('./db/db.json', (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Internal Server Error');
+//       return;
+//     }
+//     const allNotes = [...JSON.parse(data)];
+//     res.json(allNotes);
 //   });
 // });
+
+router.post('/notes', (req, res) => {
+  //get the object
+  const noteData = fs.readFile('../db/db.json', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+    notes= JSON.parse(data)
+
+    if (req.body) {
+      const newNote = {
+          title: req.body.title,
+          text: req.body.text,
+          id: Date.now().toString(),
+      };
+      notes.push(newNote)
+      fs.writeFile('../db/db.json', JSON.stringify(noteData) (err) => {
+        if (err) throw err;
+      });
+      
+    };
+  });
+});
 
 // router.delete('/notes:id', (req, res) =>{
 //   const deleteNote = req.params.id;
