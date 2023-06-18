@@ -13,11 +13,11 @@ app.get('/', (req, res) => {
 
 
 app.get('/notes', (req, res) => {
-  const notesData = require('../db/db.json');
-  res.json(notesData);
+  // const notesData = require('../db/db.json');
+  res.render(path.join(__dirname, '../public/notes.html'));
 });
 
-app.use('/routes', noteRoutes);
+// app.use('/notes', noteRoutes);
 
 app.listen(PORT, () =>
   console.log(`Express server listening on port ${PORT}!`)

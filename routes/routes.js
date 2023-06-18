@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+
 // app.get('/notes', (req, res) => {
 //   const noteData = fs.readFile('../db/db.json', (err, data) => {
 //     if (err) throw err;
@@ -9,6 +10,7 @@ const fs = require('fs');
 //   console.log(noteData);
 //   res.sendFile()
 // });
+
 router.get('/notes', (req, res) => {
   fs.readFile('./db/db.json', (err, data) => {
     if (err) {
@@ -38,7 +40,7 @@ router.get('/notes', (req, res) => {
 // router.delete('/notes:id', (req, res) =>{
 //   const deleteNote = req.params.id;
 //   console.log(deleteNote)
-//   fs.readFromFile('../db/db.json', (err, data) =>{
+//   fs.readFile('../db/db.json', (err, data) =>{
 //     if (err) throw err;
 //     console.log(data);
 //     parseData = JSON.parse(data)
