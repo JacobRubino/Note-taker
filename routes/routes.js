@@ -46,7 +46,6 @@ router.post("/notes", (req, res) => {
     }
   });
 });
-.filter((note) => note !== null); // Remove the null entries
 
 router.delete("/notes:id", (req, res) => {
   // take the id of the note that we are requesting to delete
@@ -64,7 +63,11 @@ router.delete("/notes:id", (req, res) => {
       }
       return note;
     })
-    fs.writeFile("../db/db.json", JSON.stringify(postDeleteNotes));
+    // remove the null entries
+    .filter((note) => note !== null); 
+    //rewrite the db
+    fs.writeFile("../db/db.json", JSON.stringify(postDeletedNotes));
   });
 });
+
 module.exports = router;
